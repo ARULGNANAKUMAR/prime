@@ -1,0 +1,46 @@
+{
+  "mandatory_deps": [],
+  "optional_deps": [
+    "pytest >=7.0 ; extra == 'dev'",
+    "psutil >=5.9 ; extra == 'metrics'"
+  ],
+  "mandatory_count": 0,
+  "optional_count": 2,
+  "wheel_size_bytes": 5608119,
+  "wheel_size_mb": 5.348,
+  "installed_dir_bytes": 858328,
+  "installed_dir_mb": 0.819,
+  "cpp_extensions": {},
+  "cpp_total_mb": 0.0,
+  "import_time_ms": {
+    "n": 20,
+    "mean_ms": 38.5589,
+    "median_ms": 37.7688,
+    "min_ms": 35.1399,
+    "max_ms": 57.0174,
+    "stdev_ms": 4.4574
+  },
+  "startup_to_first_solve_ms": {
+    "n": 10,
+    "mean_ms": 48.0453,
+    "median_ms": 44.4093,
+    "min_ms": 38.5362,
+    "max_ms": 80.8851,
+    "stdev_ms": 12.1774
+  },
+  "cpp_extension_sizes_bytes": {
+    "_prime_reasoning.cpython-312-x86_64-linux-gnu.so": 2914496,
+    "_prime_llm.cpython-312-x86_64-linux-gnu.so": 4094576,
+    "_prime.cpython-312-x86_64-linux-gnu.so": 645136,
+    "_prime_mosaic.cpython-312-x86_64-linux-gnu.so": 2138736,
+    "_prime_memory.cpython-312-x86_64-linux-gnu.so": 1921808,
+    "_prime_atlas.cpython-312-x86_64-linux-gnu.so": 6522720
+  },
+  "cpp_extensions_total_bytes": 18237472,
+  "cpp_extensions_total_mb": 17.393,
+  "installed_python_py_bytes": 858328,
+  "installed_python_py_mb": 0.819,
+  "installed_total_bytes": 19095800,
+  "installed_total_mb": 18.211,
+  "note_installed_vs_wheel": "Wheel is 5.35 MB (compressed); installed total is 18.2 MB (uncompressed). C++ extensions are not compressed in wheel."
+}

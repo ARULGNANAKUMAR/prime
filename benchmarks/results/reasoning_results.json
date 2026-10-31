@@ -1,0 +1,252 @@
+{
+  "env": {
+    "timestamp": "2026-10-08T01:42:18.905482Z",
+    "python": "3.12.3",
+    "platform": "Linux-6.18.44-fc-v80-x86_64-with-glibc2.39",
+    "cpu_count": 1,
+    "prime_version": "1.0.0",
+    "prime_file": "/tmp/prime_bench_venv/lib/python3.12/site-packages/prime/__init__.py"
+  },
+  "tasks": [
+    {
+      "task_id": "r01",
+      "domain": "physics",
+      "text": "A car travels 150 km in 3 hours. Calculate average speed.",
+      "expected_str": "50",
+      "expected_num": 50.0,
+      "iterations": 100,
+      "full_success_count": 100,
+      "partial_success_count": 0,
+      "combined_success_count": 100,
+      "full_success_rate": 1.0,
+      "combined_success_rate": 1.0,
+      "answer_match_rate": 1.0,
+      "numeric_match_rate": 1.0,
+      "latency": {
+        "n": 100,
+        "mean_ms": 0.9285,
+        "median_ms": 0.898,
+        "min_ms": 0.805,
+        "max_ms": 1.9103,
+        "stdev_ms": 0.1328
+      }
+    },
+    {
+      "task_id": "r02",
+      "domain": "physics",
+      "text": "A train travels 480 km in 4 hours. Calculate average speed.",
+      "expected_str": "120",
+      "expected_num": 120.0,
+      "iterations": 100,
+      "full_success_count": 100,
+      "partial_success_count": 0,
+      "combined_success_count": 100,
+      "full_success_rate": 1.0,
+      "combined_success_rate": 1.0,
+      "answer_match_rate": 1.0,
+      "numeric_match_rate": 1.0,
+      "latency": {
+        "n": 100,
+        "mean_ms": 0.9548,
+        "median_ms": 0.8893,
+        "min_ms": 0.781,
+        "max_ms": 3.6585,
+        "stdev_ms": 0.327
+      }
+    },
+    {
+      "task_id": "r03",
+      "domain": "physics",
+      "text": "A ship sails 500 km in 25 hours. Calculate average speed.",
+      "expected_str": "20",
+      "expected_num": 20.0,
+      "iterations": 100,
+      "full_success_count": 100,
+      "partial_success_count": 0,
+      "combined_success_count": 100,
+      "full_success_rate": 1.0,
+      "combined_success_rate": 1.0,
+      "answer_match_rate": 1.0,
+      "numeric_match_rate": 1.0,
+      "latency": {
+        "n": 100,
+        "mean_ms": 0.8856,
+        "median_ms": 0.8533,
+        "min_ms": 0.7464,
+        "max_ms": 2.1359,
+        "stdev_ms": 0.1486
+      }
+    },
+    {
+      "task_id": "r04",
+      "domain": "physics",
+      "text": "A bicycle travels 90 km in 3 hours. What is the average speed?",
+      "expected_str": "30",
+      "expected_num": 30.0,
+      "iterations": 100,
+      "full_success_count": 100,
+      "partial_success_count": 0,
+      "combined_success_count": 100,
+      "full_success_rate": 1.0,
+      "combined_success_rate": 1.0,
+      "answer_match_rate": 1.0,
+      "numeric_match_rate": 1.0,
+      "latency": {
+        "n": 100,
+        "mean_ms": 0.8735,
+        "median_ms": 0.8389,
+        "min_ms": 0.7402,
+        "max_ms": 1.2844,
+        "stdev_ms": 0.1067
+      }
+    },
+    {
+      "task_id": "r05",
+      "domain": "arithmetic",
+      "text": "Calculate 144 divided by 12.",
+      "expected_str": "12",
+      "expected_num": 12.0,
+      "iterations": 100,
+      "full_success_count": 0,
+      "partial_success_count": 100,
+      "combined_success_count": 100,
+      "full_success_rate": 0.0,
+      "combined_success_rate": 1.0,
+      "answer_match_rate": 0.0,
+      "numeric_match_rate": 0.0,
+      "latency": {
+        "n": 100,
+        "mean_ms": 0.7952,
+        "median_ms": 0.745,
+        "min_ms": 0.6565,
+        "max_ms": 1.5826,
+        "stdev_ms": 0.1377
+      }
+    },
+    {
+      "task_id": "r06",
+      "domain": "arithmetic",
+      "text": "Calculate 1000 divided by 25.",
+      "expected_str": "40",
+      "expected_num": 40.0,
+      "iterations": 100,
+      "full_success_count": 0,
+      "partial_success_count": 100,
+      "combined_success_count": 100,
+      "full_success_rate": 0.0,
+      "combined_success_rate": 1.0,
+      "answer_match_rate": 0.0,
+      "numeric_match_rate": 0.0,
+      "latency": {
+        "n": 100,
+        "mean_ms": 0.7689,
+        "median_ms": 0.7416,
+        "min_ms": 0.6649,
+        "max_ms": 1.2249,
+        "stdev_ms": 0.098
+      }
+    },
+    {
+      "task_id": "r07",
+      "domain": "arithmetic",
+      "text": "Calculate 840 divided by 28.",
+      "expected_str": "30",
+      "expected_num": 30.0,
+      "iterations": 100,
+      "full_success_count": 0,
+      "partial_success_count": 100,
+      "combined_success_count": 100,
+      "full_success_rate": 0.0,
+      "combined_success_rate": 1.0,
+      "answer_match_rate": 0.0,
+      "numeric_match_rate": 0.0,
+      "latency": {
+        "n": 100,
+        "mean_ms": 0.7874,
+        "median_ms": 0.7488,
+        "min_ms": 0.6484,
+        "max_ms": 1.7017,
+        "stdev_ms": 0.1531
+      }
+    },
+    {
+      "task_id": "r08",
+      "domain": "multi_step",
+      "text": "A car travels 150 km in 3 hours then 240 km in 4 hours. Average speed for entire",
+      "expected_str": "55.7",
+      "expected_num": null,
+      "iterations": 100,
+      "full_success_count": 100,
+      "partial_success_count": 0,
+      "combined_success_count": 100,
+      "full_success_rate": 1.0,
+      "combined_success_rate": 1.0,
+      "answer_match_rate": 0.0,
+      "numeric_match_rate": null,
+      "latency": {
+        "n": 100,
+        "mean_ms": 0.9746,
+        "median_ms": 0.9544,
+        "min_ms": 0.8668,
+        "max_ms": 1.4176,
+        "stdev_ms": 0.0791
+      }
+    },
+    {
+      "task_id": "r09",
+      "domain": "physics",
+      "text": "A motorcycle covers 240 km in 3 hours. What is its speed?",
+      "expected_str": "80",
+      "expected_num": 80.0,
+      "iterations": 100,
+      "full_success_count": 0,
+      "partial_success_count": 100,
+      "combined_success_count": 100,
+      "full_success_rate": 0.0,
+      "combined_success_rate": 1.0,
+      "answer_match_rate": 0.0,
+      "numeric_match_rate": 0.0,
+      "latency": {
+        "n": 100,
+        "mean_ms": 0.8258,
+        "median_ms": 0.8037,
+        "min_ms": 0.7045,
+        "max_ms": 1.2302,
+        "stdev_ms": 0.0871
+      }
+    },
+    {
+      "task_id": "r10",
+      "domain": "physics",
+      "text": "A plane flies 1200 km in 2 hours. Calculate average speed.",
+      "expected_str": "600",
+      "expected_num": 600.0,
+      "iterations": 100,
+      "full_success_count": 100,
+      "partial_success_count": 0,
+      "combined_success_count": 100,
+      "full_success_rate": 1.0,
+      "combined_success_rate": 1.0,
+      "answer_match_rate": 1.0,
+      "numeric_match_rate": 1.0,
+      "latency": {
+        "n": 100,
+        "mean_ms": 0.9216,
+        "median_ms": 0.891,
+        "min_ms": 0.8096,
+        "max_ms": 1.4539,
+        "stdev_ms": 0.1148
+      }
+    }
+  ],
+  "aggregate": {
+    "total_tasks": 10,
+    "mean_full_success_rate": 0.6,
+    "mean_combined_success_rate": 1.0,
+    "mean_answer_match_rate": 0.5,
+    "mean_latency_ms": 0.8716,
+    "tasks_with_full_success": 6,
+    "tasks_with_combined_success": 10,
+    "status_note": "PARTIAL_SUCCESS means reasoning pipeline ran but answer extraction incomplete (UNRESOLVED). SUCCESS means full answer extracted."
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "prime_version": "1.0.0",
+  "iterations": 100,
+  "warmup_iterations": 5,
+  "random_seed": 42,
+  "suites": ["reasoning", "memory", "atlas", "echo", "mosaic", "continual_learning", "optimization", "ablation", "dependency"],
+  "output_dir": "results",
+  "report_dir": "reports",
+  "notes": "All experiments run against the installed prime-ai wheel, not source tree"
+}

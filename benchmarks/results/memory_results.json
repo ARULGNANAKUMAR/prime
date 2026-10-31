@@ -1,0 +1,132 @@
+{
+  "tasks": [
+    {
+      "task_id": "m01",
+      "token": "benchmark_city_one",
+      "cold_success_rate": 1.0,
+      "warm_success_rate": 1.0,
+      "cold_latency": {
+        "n": 50,
+        "mean_ms": 0.8839,
+        "median_ms": 0.8481,
+        "min_ms": 0.6703,
+        "max_ms": 2.085,
+        "stdev_ms": 0.2052
+      },
+      "warm_latency": {
+        "n": 50,
+        "mean_ms": 0.9815,
+        "median_ms": 0.9896,
+        "min_ms": 0.691,
+        "max_ms": 1.3006,
+        "stdev_ms": 0.1961
+      },
+      "store_latency_mean_ms": 0.7895,
+      "latency_delta_pct": 11.05
+    },
+    {
+      "task_id": "m02",
+      "token": "benchmark_date_delta",
+      "cold_success_rate": 1.0,
+      "warm_success_rate": 1.0,
+      "cold_latency": {
+        "n": 50,
+        "mean_ms": 0.8073,
+        "median_ms": 0.7668,
+        "min_ms": 0.6929,
+        "max_ms": 1.6887,
+        "stdev_ms": 0.1551
+      },
+      "warm_latency": {
+        "n": 50,
+        "mean_ms": 0.7286,
+        "median_ms": 0.7164,
+        "min_ms": 0.6548,
+        "max_ms": 0.9795,
+        "stdev_ms": 0.0541
+      },
+      "store_latency_mean_ms": 0.709,
+      "latency_delta_pct": -9.75
+    },
+    {
+      "task_id": "m03",
+      "token": "benchmark_host_gamma",
+      "cold_success_rate": 1.0,
+      "warm_success_rate": 1.0,
+      "cold_latency": {
+        "n": 50,
+        "mean_ms": 0.7315,
+        "median_ms": 0.718,
+        "min_ms": 0.6704,
+        "max_ms": 0.9763,
+        "stdev_ms": 0.0558
+      },
+      "warm_latency": {
+        "n": 50,
+        "mean_ms": 0.7422,
+        "median_ms": 0.7269,
+        "min_ms": 0.6809,
+        "max_ms": 0.984,
+        "stdev_ms": 0.0599
+      },
+      "store_latency_mean_ms": 0.7212,
+      "latency_delta_pct": 1.45
+    },
+    {
+      "task_id": "m04",
+      "token": "BK_TEST_PREFIX",
+      "cold_success_rate": 1.0,
+      "warm_success_rate": 1.0,
+      "cold_latency": {
+        "n": 50,
+        "mean_ms": 0.7286,
+        "median_ms": 0.7066,
+        "min_ms": 0.6425,
+        "max_ms": 1.0586,
+        "stdev_ms": 0.0826
+      },
+      "warm_latency": {
+        "n": 50,
+        "mean_ms": 0.7426,
+        "median_ms": 0.7135,
+        "min_ms": 0.6659,
+        "max_ms": 1.1879,
+        "stdev_ms": 0.0895
+      },
+      "store_latency_mean_ms": 0.6367,
+      "latency_delta_pct": 1.92
+    },
+    {
+      "task_id": "m05",
+      "token": "benchmark_person_sigma",
+      "cold_success_rate": 1.0,
+      "warm_success_rate": 1.0,
+      "cold_latency": {
+        "n": 50,
+        "mean_ms": 0.7541,
+        "median_ms": 0.738,
+        "min_ms": 0.6719,
+        "max_ms": 1.0892,
+        "stdev_ms": 0.0757
+      },
+      "warm_latency": {
+        "n": 50,
+        "mean_ms": 0.745,
+        "median_ms": 0.7307,
+        "min_ms": 0.6593,
+        "max_ms": 0.9639,
+        "stdev_ms": 0.0594
+      },
+      "store_latency_mean_ms": 0.7661,
+      "latency_delta_pct": -1.21
+    }
+  ],
+  "aggregate": {
+    "total_tasks": 5,
+    "mean_cold_success_rate": 1.0,
+    "mean_warm_success_rate": 1.0,
+    "mean_cold_latency_ms": 0.7811,
+    "mean_warm_latency_ms": 0.788,
+    "note": "Both cold and warm queries return PARTIAL_SUCCESS for generic token queries. Memory subsystem stores content; query success does not change because the stored token is not directly answerable without a reasoning rule that maps it."
+  }
+}

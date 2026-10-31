@@ -1,0 +1,39 @@
+{
+  "version": "1.0",
+  "description": "Synthetic benchmark tasks — no real private data",
+  "reasoning_tasks": [
+    {"id": "r01", "text": "A car travels 150 km in 3 hours. Calculate average speed.", "expected_answer": "50", "category": "physics", "difficulty": "easy"},
+    {"id": "r02", "text": "Calculate 144 divided by 12.", "expected_answer": "12", "category": "arithmetic", "difficulty": "easy"},
+    {"id": "r03", "text": "A train covers 480 km in 4 hours. What is its speed?", "expected_answer": "120", "category": "physics", "difficulty": "easy"},
+    {"id": "r04", "text": "Calculate 256 divided by 16.", "expected_answer": "16", "category": "arithmetic", "difficulty": "easy"},
+    {"id": "r05", "text": "A runner completes 10 km in 50 minutes. Calculate speed in km per minute.", "expected_answer": "0.2", "category": "physics", "difficulty": "medium"},
+    {"id": "r06", "text": "Calculate 1000 divided by 25.", "expected_answer": "40", "category": "arithmetic", "difficulty": "easy"},
+    {"id": "r07", "text": "A bicycle travels 90 km in 3 hours. What is the average speed?", "expected_answer": "30", "category": "physics", "difficulty": "easy"},
+    {"id": "r08", "text": "Calculate 360 divided by 12.", "expected_answer": "30", "category": "arithmetic", "difficulty": "easy"},
+    {"id": "r09", "text": "A ship sails 500 km in 25 hours. What is its speed?", "expected_answer": "20", "category": "physics", "difficulty": "easy"},
+    {"id": "r10", "text": "Calculate 840 divided by 28.", "expected_answer": "30", "category": "arithmetic", "difficulty": "medium"}
+  ],
+  "atlas_tasks": [
+    {"id": "a01", "domain": "physics",      "text": "A car travels 150 km in 3 hours. Calculate average speed.", "expected_entities_min": 1, "expected_goals_min": 1},
+    {"id": "a02", "domain": "business",     "text": "Revenue is 500 units at price 20 each. Calculate total revenue.", "expected_entities_min": 1, "expected_goals_min": 1},
+    {"id": "a03", "domain": "programming",  "text": "An algorithm processes N items in O(N) time. How many operations for N=100?", "expected_entities_min": 1, "expected_goals_min": 1},
+    {"id": "a04", "domain": "engineering",  "text": "A beam supports a load of 500 kg over 2 metres. Calculate force per metre.", "expected_entities_min": 1, "expected_goals_min": 1},
+    {"id": "a05", "domain": "biology",      "text": "A population of 200 organisms doubles every 3 hours. What is the count after 6 hours?", "expected_entities_min": 1, "expected_goals_min": 1},
+    {"id": "a06", "domain": "finance",      "text": "An investment of 1000 grows at 5 percent per year. What is the value after 1 year?", "expected_entities_min": 1, "expected_goals_min": 1},
+    {"id": "a07", "domain": "chemistry",    "text": "A solution contains 50 grams of solute in 250 ml of solvent. Calculate concentration.", "expected_entities_min": 1, "expected_goals_min": 1}
+  ],
+  "memory_tasks": [
+    {"id": "m01", "store_content": "The capital of benchmark_country_alpha is benchmark_city_one.", "query": "benchmark_city_one", "tag": "geography"},
+    {"id": "m02", "store_content": "The project deadline is benchmark_date_delta.", "query": "benchmark_date_delta", "tag": "schedule"},
+    {"id": "m03", "store_content": "The server hostname is benchmark_host_gamma.", "query": "benchmark_host_gamma", "tag": "infrastructure"},
+    {"id": "m04", "store_content": "The API key prefix is BK_TEST_PREFIX.", "query": "BK_TEST_PREFIX", "tag": "config"},
+    {"id": "m05", "store_content": "The team lead for module beta is benchmark_person_sigma.", "query": "benchmark_person_sigma", "tag": "personnel"}
+  ],
+  "mosaic_tasks": [
+    {"id": "mo01", "text": "A car travels 150 km in 3 hours. Calculate average speed.", "expected_modules_min": 1},
+    {"id": "mo02", "text": "Revenue is 500 units at price 20 each. Calculate total revenue.", "expected_modules_min": 1},
+    {"id": "mo03", "text": "An algorithm processes N items in O(N) time. How many operations for N=100?", "expected_modules_min": 1},
+    {"id": "mo04", "text": "A population of 200 doubles every 3 hours. What is the count after 6 hours?", "expected_modules_min": 1},
+    {"id": "mo05", "text": "Calculate 840 divided by 28.", "expected_modules_min": 1}
+  ]
+}

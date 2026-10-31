@@ -1,0 +1,63 @@
+{
+  "stage0_A": [
+    {
+      "task": "A car travels 150 km in 3 hours. Calculate average speed.",
+      "success_rate": 1.0,
+      "mean_latency_ms": 0.9509
+    },
+    {
+      "task": "A train travels 480 km in 4 hours. Calculate average speed.",
+      "success_rate": 1.0,
+      "mean_latency_ms": 0.9251
+    },
+    {
+      "task": "A ship sails 500 km in 25 hours. Calculate average speed.",
+      "success_rate": 1.0,
+      "mean_latency_ms": 0.9218
+    }
+  ],
+  "stage2_B": [
+    {
+      "task": "Revenue is 500 units at price 20 each. Calculate total reven",
+      "success_rate": 1.0,
+      "mean_latency_ms": 0.843
+    },
+    {
+      "task": "Revenue is 100 units at price 50 each. Calculate total reven",
+      "success_rate": 1.0,
+      "mean_latency_ms": 0.8172
+    },
+    {
+      "task": "Revenue is 250 units at price 8 each. Calculate total revenu",
+      "success_rate": 1.0,
+      "mean_latency_ms": 0.7994
+    }
+  ],
+  "stage3_A": [
+    {
+      "task": "A car travels 150 km in 3 hours. Calculate average speed.",
+      "success_rate": 1.0,
+      "mean_latency_ms": 0.9846
+    },
+    {
+      "task": "A train travels 480 km in 4 hours. Calculate average speed.",
+      "success_rate": 1.0,
+      "mean_latency_ms": 0.9703
+    },
+    {
+      "task": "A ship sails 500 km in 25 hours. Calculate average speed.",
+      "success_rate": 1.0,
+      "mean_latency_ms": 0.9185
+    }
+  ],
+  "aggregate": {
+    "dataset_A_tasks": 3,
+    "dataset_B_tasks": 3,
+    "iterations_per_stage": 50,
+    "baseline_A_success_rate": 1.0,
+    "acquisition_B_success_rate": 1.0,
+    "retention_A_success_rate": 1.0,
+    "retention_ratio": 1.0,
+    "h8_evidence": "PARTIAL \u2014 B tasks achievable after exposure; A retention at 100%; no catastrophic forgetting observed. However, PRIME has no neural weights, so \"continual learning\" here means the reasoning rules remain consistent across task types."
+  }
+}

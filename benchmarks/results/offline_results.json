@@ -1,0 +1,49 @@
+{
+  "tasks": [
+    {
+      "task": "A car travels 150 km in 3 hours. Calculate average speed.",
+      "success_rate": 1.0,
+      "network_attempts": 0,
+      "latency": {
+        "n": 20,
+        "mean_ms": 1.0353,
+        "median_ms": 0.9767,
+        "min_ms": 0.8618,
+        "max_ms": 1.6069,
+        "stdev_ms": 0.1802
+      }
+    },
+    {
+      "task": "Calculate 840 divided by 28.",
+      "success_rate": 1.0,
+      "network_attempts": 0,
+      "latency": {
+        "n": 20,
+        "mean_ms": 0.8897,
+        "median_ms": 0.8488,
+        "min_ms": 0.7397,
+        "max_ms": 1.1228,
+        "stdev_ms": 0.1297
+      }
+    },
+    {
+      "task": "A train travels 480 km in 4 hours. Calculate average speed.",
+      "success_rate": 1.0,
+      "network_attempts": 0,
+      "latency": {
+        "n": 20,
+        "mean_ms": 1.0325,
+        "median_ms": 0.9395,
+        "min_ms": 0.8258,
+        "max_ms": 1.7485,
+        "stdev_ms": 0.2327
+      }
+    }
+  ],
+  "aggregate": {
+    "tasks_tested": 3,
+    "mean_success_rate": 1.0,
+    "total_network_attempts": 0,
+    "offline_capable": true
+  }
+}

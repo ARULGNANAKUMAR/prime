@@ -1,0 +1,111 @@
+{
+  "experiments": {
+    "exp1_full_shared": {
+      "description": "Full PRIME, shared instance, standard task",
+      "task": "A car travels 150 km in 3 hours. Calculate average speed.",
+      "n": 50,
+      "success_rate": 1.0,
+      "latency": {
+        "n": 50,
+        "mean_ms": 0.9044,
+        "median_ms": 0.8688,
+        "min_ms": 0.7762,
+        "max_ms": 1.3372,
+        "stdev_ms": 0.1113
+      }
+    },
+    "exp2_fresh_per_call": {
+      "description": "Fresh PRIME instance per call (approx no memory acc)",
+      "task": "A car travels 150 km in 3 hours. Calculate average speed.",
+      "n": 50,
+      "success_rate": 1.0,
+      "latency": {
+        "n": 50,
+        "mean_ms": 1.0899,
+        "median_ms": 1.0195,
+        "min_ms": 0.8702,
+        "max_ms": 2.4356,
+        "stdev_ms": 0.2634
+      }
+    },
+    "exp3_minimal_task": {
+      "description": "Full PRIME, shared, minimal arithmetic task",
+      "task": "Calculate 150 divided by 3.",
+      "n": 50,
+      "success_rate": 1.0,
+      "latency": {
+        "n": 50,
+        "mean_ms": 0.839,
+        "median_ms": 0.7672,
+        "min_ms": 0.6601,
+        "max_ms": 2.3484,
+        "stdev_ms": 0.3073
+      }
+    },
+    "exp4_complex_task": {
+      "description": "Full PRIME, shared, complex multi-step task",
+      "task": "A car travels 150 km in 3 hours then 240 km in 4 hours. Aver",
+      "n": 50,
+      "success_rate": 1.0,
+      "latency": {
+        "n": 50,
+        "mean_ms": 0.9879,
+        "median_ms": 0.9812,
+        "min_ms": 0.8893,
+        "max_ms": 1.2086,
+        "stdev_ms": 0.0632
+      }
+    },
+    "exp5_cross_domain": {
+      "description": "Full PRIME, cross-domain interleaved (tests ATLAS/MOSAIC routing)",
+      "domains": [
+        "physics",
+        "business",
+        "arithmetic",
+        "biology",
+        "finance"
+      ],
+      "n": 50,
+      "success_rate": 0.8,
+      "latency": {
+        "n": 50,
+        "mean_ms": 0.8363,
+        "median_ms": 0.8327,
+        "min_ms": 0.7088,
+        "max_ms": 1.1493,
+        "stdev_ms": 0.0869
+      }
+    }
+  },
+  "aggregate": {
+    "baseline_exp1_mean_ms": 0.9044,
+    "experiments": {
+      "exp1_full_shared": {
+        "mean_ms": 0.9044,
+        "vs_baseline_pct": 0.0,
+        "success_rate": 1.0
+      },
+      "exp2_fresh_per_call": {
+        "mean_ms": 1.0899,
+        "vs_baseline_pct": 20.51,
+        "success_rate": 1.0
+      },
+      "exp3_minimal_task": {
+        "mean_ms": 0.839,
+        "vs_baseline_pct": -7.23,
+        "success_rate": 1.0
+      },
+      "exp4_complex_task": {
+        "mean_ms": 0.9879,
+        "vs_baseline_pct": 9.23,
+        "success_rate": 1.0
+      },
+      "exp5_cross_domain": {
+        "mean_ms": 0.8363,
+        "vs_baseline_pct": -7.53,
+        "success_rate": 0.8
+      }
+    },
+    "key_finding": "exp2 (fresh instance per call) is slower by overhead of instance creation. exp3 (minimal task) is faster indicating task complexity affects latency. exp4 (complex task) shows marginal latency increase vs standard. TRUE ablation (disabling individual C++ components) not possible via public API."
+  }
+}

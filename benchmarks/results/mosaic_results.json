@@ -1,0 +1,179 @@
+{
+  "tasks": [
+    {
+      "task_id": "mo01",
+      "task_type": "arithmetic",
+      "text": "Calculate 840 divided by 28.",
+      "full_success_rate": 1.0,
+      "combined_success_rate": 1.0,
+      "module_pipeline_most_common": [
+        "atlas",
+        "reasoning",
+        "validator"
+      ],
+      "module_pipeline_consistency": 1.0,
+      "latency": {
+        "n": 50,
+        "mean_ms": 0.7819,
+        "median_ms": 0.7655,
+        "min_ms": 0.6618,
+        "max_ms": 0.9865,
+        "stdev_ms": 0.0686
+      }
+    },
+    {
+      "task_id": "mo02",
+      "task_type": "physics",
+      "text": "A car travels 150 km in 3 hours. Calculate average speed.",
+      "full_success_rate": 1.0,
+      "combined_success_rate": 1.0,
+      "module_pipeline_most_common": [
+        "atlas",
+        "reasoning",
+        "validator"
+      ],
+      "module_pipeline_consistency": 1.0,
+      "latency": {
+        "n": 50,
+        "mean_ms": 1.0627,
+        "median_ms": 0.9583,
+        "min_ms": 0.7952,
+        "max_ms": 2.7867,
+        "stdev_ms": 0.3346
+      }
+    },
+    {
+      "task_id": "mo03",
+      "task_type": "business",
+      "text": "Revenue is 500 units at price 20 each. Calculate total reven",
+      "full_success_rate": 1.0,
+      "combined_success_rate": 1.0,
+      "module_pipeline_most_common": [
+        "atlas",
+        "reasoning",
+        "validator"
+      ],
+      "module_pipeline_consistency": 1.0,
+      "latency": {
+        "n": 50,
+        "mean_ms": 1.0391,
+        "median_ms": 0.9291,
+        "min_ms": 0.7376,
+        "max_ms": 1.6006,
+        "stdev_ms": 0.2588
+      }
+    },
+    {
+      "task_id": "mo04",
+      "task_type": "biology",
+      "text": "A population of 200 doubles every 3 hours. Count after 6 hou",
+      "full_success_rate": 0.0,
+      "combined_success_rate": 0.0,
+      "module_pipeline_most_common": [
+        "atlas",
+        "reasoning"
+      ],
+      "module_pipeline_consistency": 1.0,
+      "latency": {
+        "n": 50,
+        "mean_ms": 0.7989,
+        "median_ms": 0.7698,
+        "min_ms": 0.6869,
+        "max_ms": 0.9986,
+        "stdev_ms": 0.0807
+      }
+    },
+    {
+      "task_id": "mo05",
+      "task_type": "programming",
+      "text": "An algorithm processes N items in O(N) time. Operations for ",
+      "full_success_rate": 1.0,
+      "combined_success_rate": 1.0,
+      "module_pipeline_most_common": [
+        "atlas",
+        "reasoning",
+        "validator"
+      ],
+      "module_pipeline_consistency": 1.0,
+      "latency": {
+        "n": 50,
+        "mean_ms": 0.8114,
+        "median_ms": 0.7735,
+        "min_ms": 0.7084,
+        "max_ms": 1.2378,
+        "stdev_ms": 0.0961
+      }
+    },
+    {
+      "task_id": "mo06",
+      "task_type": "engineering",
+      "text": "A beam supports 500 kg over 2 metres. Calculate force per me",
+      "full_success_rate": 1.0,
+      "combined_success_rate": 1.0,
+      "module_pipeline_most_common": [
+        "atlas",
+        "reasoning",
+        "validator"
+      ],
+      "module_pipeline_consistency": 1.0,
+      "latency": {
+        "n": 50,
+        "mean_ms": 0.9029,
+        "median_ms": 0.8621,
+        "min_ms": 0.7581,
+        "max_ms": 1.6226,
+        "stdev_ms": 0.1435
+      }
+    },
+    {
+      "task_id": "mo07",
+      "task_type": "finance",
+      "text": "An investment of 1000 at 5 percent grows for 1 year. Final v",
+      "full_success_rate": 1.0,
+      "combined_success_rate": 1.0,
+      "module_pipeline_most_common": [
+        "atlas",
+        "reasoning",
+        "validator"
+      ],
+      "module_pipeline_consistency": 1.0,
+      "latency": {
+        "n": 50,
+        "mean_ms": 0.8757,
+        "median_ms": 0.8485,
+        "min_ms": 0.736,
+        "max_ms": 1.3124,
+        "stdev_ms": 0.1042
+      }
+    }
+  ],
+  "aggregate": {
+    "total_tasks": 7,
+    "task_types_tested": [
+      "arithmetic",
+      "physics",
+      "business",
+      "biology",
+      "programming",
+      "engineering",
+      "finance"
+    ],
+    "mean_full_success_rate": 0.8571,
+    "mean_combined_success_rate": 0.8571,
+    "unique_module_pipelines_observed": 2,
+    "pipelines": [
+      [
+        "atlas",
+        "reasoning"
+      ],
+      [
+        "atlas",
+        "reasoning",
+        "validator"
+      ]
+    ],
+    "mean_latency_ms": 0.8961,
+    "latency_range_ms": 0.2808,
+    "h6_evidence": "PARTIAL \u2014 all tasks route through atlas+reasoning+validator; validator absent for some tasks indicating some module selection. Single observable pipeline at this granularity."
+  }
+}

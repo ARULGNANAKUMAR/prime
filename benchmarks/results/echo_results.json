@@ -1,0 +1,79 @@
+{
+  "training": [
+    {
+      "text": "A car travels 150 km in 3 hours. Calculate average speed.",
+      "status": "SolveStatus.SUCCESS",
+      "latency_ms": 2.0509,
+      "learning_applied": false
+    },
+    {
+      "text": "A train travels 480 km in 4 hours. Calculate average speed.",
+      "status": "SolveStatus.SUCCESS",
+      "latency_ms": 1.0285,
+      "learning_applied": false
+    },
+    {
+      "text": "A bicycle travels 90 km in 3 hours. Calculate average speed.",
+      "status": "SolveStatus.SUCCESS",
+      "latency_ms": 1.149,
+      "learning_applied": false
+    },
+    {
+      "text": "A ship sails 500 km in 25 hours. Calculate average speed.",
+      "status": "SolveStatus.SUCCESS",
+      "latency_ms": 0.931,
+      "learning_applied": false
+    }
+  ],
+  "transfer": [
+    {
+      "text": "A plane flies 1200 km in 2 hours. Calculate average speed.",
+      "iterations": 50,
+      "success_rate": 1.0,
+      "early_latency_mean_ms": 0.9438,
+      "late_latency_mean_ms": 0.9359,
+      "latency_delta_pct": -0.83,
+      "improvement_observed": false,
+      "learning_applied_any": false
+    },
+    {
+      "text": "A boat travels 60 km in 4 hours. What is the average speed?",
+      "iterations": 50,
+      "success_rate": 1.0,
+      "early_latency_mean_ms": 0.8756,
+      "late_latency_mean_ms": 0.9347,
+      "latency_delta_pct": 6.75,
+      "improvement_observed": false,
+      "learning_applied_any": false
+    },
+    {
+      "text": "A motorcycle covers 240 km in 3 hours. What is its speed?",
+      "iterations": 50,
+      "success_rate": 1.0,
+      "early_latency_mean_ms": 0.9023,
+      "late_latency_mean_ms": 0.8433,
+      "latency_delta_pct": -6.53,
+      "improvement_observed": true,
+      "learning_applied_any": false
+    },
+    {
+      "text": "A runner covers 10 km in 50 minutes. Speed in km per minute?",
+      "iterations": 50,
+      "success_rate": 1.0,
+      "early_latency_mean_ms": 0.8363,
+      "late_latency_mean_ms": 0.8102,
+      "latency_delta_pct": -3.12,
+      "improvement_observed": true,
+      "learning_applied_any": false
+    }
+  ],
+  "aggregate": {
+    "training_tasks": 4,
+    "training_success": 4,
+    "transfer_tasks": 4,
+    "mean_transfer_success_rate": 1.0,
+    "within_session_improvements": 2,
+    "h5_evidence": "PARTIAL",
+    "note": "ECHO internal component tracks experiences (learning_applied field). Within-session latency improvement not consistently observed, which may indicate ECHO operates on longer timescales or across sessions rather than within a single session."
+  }
+}

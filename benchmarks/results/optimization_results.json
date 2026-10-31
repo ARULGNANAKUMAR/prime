@@ -1,0 +1,70 @@
+{
+  "tasks": [
+    {
+      "task": "A car travels 150 km in 3 hours. Calculate average speed.",
+      "cold_n": 5,
+      "warm_n": 50,
+      "cold_mean_ms": 0.9766,
+      "warm_mean_ms": 0.8955,
+      "warm_stdev_ms": 0.0873,
+      "improvement_pct": 8.31,
+      "improvement_observed": true,
+      "optimizer_strategy": "BALANCED"
+    },
+    {
+      "task": "Calculate 1000 divided by 25.",
+      "cold_n": 5,
+      "warm_n": 50,
+      "cold_mean_ms": 0.7668,
+      "warm_mean_ms": 0.7832,
+      "warm_stdev_ms": 0.0703,
+      "improvement_pct": -2.13,
+      "improvement_observed": false,
+      "optimizer_strategy": "BALANCED"
+    },
+    {
+      "task": "A train travels 480 km in 4 hours. Calculate average speed.",
+      "cold_n": 5,
+      "warm_n": 50,
+      "cold_mean_ms": 0.9147,
+      "warm_mean_ms": 0.8872,
+      "warm_stdev_ms": 0.0778,
+      "improvement_pct": 3.01,
+      "improvement_observed": true,
+      "optimizer_strategy": "BALANCED"
+    },
+    {
+      "task": "Revenue is 500 units at price 20. Calculate total revenue.",
+      "cold_n": 5,
+      "warm_n": 50,
+      "cold_mean_ms": 0.785,
+      "warm_mean_ms": 0.7781,
+      "warm_stdev_ms": 0.0795,
+      "improvement_pct": 0.87,
+      "improvement_observed": false,
+      "optimizer_strategy": "BALANCED"
+    },
+    {
+      "task": "A population of 200 doubles every 3 hours. Count after 6 hou",
+      "cold_n": 5,
+      "warm_n": 50,
+      "cold_mean_ms": 0.7711,
+      "warm_mean_ms": 0.7922,
+      "warm_stdev_ms": 0.083,
+      "improvement_pct": -2.74,
+      "improvement_observed": false,
+      "optimizer_strategy": "BALANCED"
+    }
+  ],
+  "aggregate": {
+    "total_tasks": 5,
+    "cold_n": 5,
+    "warm_n": 50,
+    "tasks_with_improvement": 2,
+    "mean_improvement_pct": 1.46,
+    "mean_cold_ms": 0.8428,
+    "mean_warm_ms": 0.8272,
+    "h9_evidence": "PARTIAL \u2014 optimizer_strategy=BALANCED observed consistently. Warm-up effect measurable but small and within noise. Cannot perform true A/B test without disable_adaptive_optimization API flag.",
+    "limitation": "True adaptive optimization ablation requires PRIME to expose a constructor flag to disable it."
+  }
+}

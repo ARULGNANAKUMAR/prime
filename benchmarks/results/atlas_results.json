@@ -1,0 +1,174 @@
+{
+  "tasks": [
+    {
+      "task_id": "a01",
+      "domain": "physics",
+      "text": "A car travels 150 km in 3 hours. Calculate average speed.",
+      "full_success_rate": 1.0,
+      "partial_success_rate": 0.0,
+      "combined_success_rate": 1.0,
+      "modules_observed": [
+        "atlas",
+        "reasoning",
+        "validator"
+      ],
+      "atlas_in_pipeline": true,
+      "latency": {
+        "n": 50,
+        "mean_ms": 0.8613,
+        "median_ms": 0.8473,
+        "min_ms": 0.7721,
+        "max_ms": 1.3527,
+        "stdev_ms": 0.0814
+      }
+    },
+    {
+      "task_id": "a02",
+      "domain": "business",
+      "text": "Revenue is 500 units at price 20 each. Calculate total revenue.",
+      "full_success_rate": 0.0,
+      "partial_success_rate": 1.0,
+      "combined_success_rate": 1.0,
+      "modules_observed": [
+        "atlas",
+        "reasoning",
+        "validator"
+      ],
+      "atlas_in_pipeline": true,
+      "latency": {
+        "n": 50,
+        "mean_ms": 0.7855,
+        "median_ms": 0.7666,
+        "min_ms": 0.691,
+        "max_ms": 1.1645,
+        "stdev_ms": 0.0841
+      }
+    },
+    {
+      "task_id": "a03",
+      "domain": "programming",
+      "text": "An algorithm processes N items in O(N) time. How many operations for N=100?",
+      "full_success_rate": 0.0,
+      "partial_success_rate": 1.0,
+      "combined_success_rate": 1.0,
+      "modules_observed": [
+        "atlas",
+        "reasoning",
+        "validator"
+      ],
+      "atlas_in_pipeline": true,
+      "latency": {
+        "n": 50,
+        "mean_ms": 0.7556,
+        "median_ms": 0.7463,
+        "min_ms": 0.6823,
+        "max_ms": 0.9354,
+        "stdev_ms": 0.0546
+      }
+    },
+    {
+      "task_id": "a04",
+      "domain": "engineering",
+      "text": "A beam supports 500 kg over 2 metres. Calculate force per metre.",
+      "full_success_rate": 0.0,
+      "partial_success_rate": 1.0,
+      "combined_success_rate": 1.0,
+      "modules_observed": [
+        "atlas",
+        "reasoning",
+        "validator"
+      ],
+      "atlas_in_pipeline": true,
+      "latency": {
+        "n": 50,
+        "mean_ms": 0.8074,
+        "median_ms": 0.7951,
+        "min_ms": 0.7298,
+        "max_ms": 0.9751,
+        "stdev_ms": 0.0561
+      }
+    },
+    {
+      "task_id": "a05",
+      "domain": "biology",
+      "text": "A population of 200 doubles every 3 hours. Count after 6 hours.",
+      "full_success_rate": 0.0,
+      "partial_success_rate": 0.0,
+      "combined_success_rate": 0.0,
+      "modules_observed": [
+        "atlas",
+        "reasoning"
+      ],
+      "atlas_in_pipeline": true,
+      "latency": {
+        "n": 50,
+        "mean_ms": 0.7387,
+        "median_ms": 0.7194,
+        "min_ms": 0.6465,
+        "max_ms": 1.1171,
+        "stdev_ms": 0.0774
+      }
+    },
+    {
+      "task_id": "a06",
+      "domain": "finance",
+      "text": "An investment of 1000 at 5 percent grows for 1 year. Final value?",
+      "full_success_rate": 0.0,
+      "partial_success_rate": 1.0,
+      "combined_success_rate": 1.0,
+      "modules_observed": [
+        "atlas",
+        "reasoning",
+        "validator"
+      ],
+      "atlas_in_pipeline": true,
+      "latency": {
+        "n": 50,
+        "mean_ms": 0.8207,
+        "median_ms": 0.8035,
+        "min_ms": 0.7304,
+        "max_ms": 0.9899,
+        "stdev_ms": 0.0524
+      }
+    },
+    {
+      "task_id": "a07",
+      "domain": "chemistry",
+      "text": "A solution contains 50 grams of solute in 250 ml. Calculate concentration.",
+      "full_success_rate": 0.0,
+      "partial_success_rate": 1.0,
+      "combined_success_rate": 1.0,
+      "modules_observed": [
+        "atlas",
+        "reasoning",
+        "validator"
+      ],
+      "atlas_in_pipeline": true,
+      "latency": {
+        "n": 50,
+        "mean_ms": 0.9026,
+        "median_ms": 0.8822,
+        "min_ms": 0.8164,
+        "max_ms": 1.2646,
+        "stdev_ms": 0.0709
+      }
+    }
+  ],
+  "aggregate": {
+    "total_tasks": 7,
+    "domains_tested": [
+      "biology",
+      "business",
+      "chemistry",
+      "engineering",
+      "finance",
+      "physics",
+      "programming"
+    ],
+    "mean_full_success_rate": 0.1429,
+    "mean_combined_success_rate": 0.8571,
+    "tasks_with_atlas_in_pipeline": 7,
+    "mean_latency_ms": 0.8103,
+    "note": "ATLAS appears in modules_used for all tasks, confirming it participates in the reasoning pipeline across all 7 domains tested."
+  }
+}
