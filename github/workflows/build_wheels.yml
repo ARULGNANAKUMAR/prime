@@ -1,0 +1,316 @@
+# .github/workflows/build_wheels.yml
+# ---------------------------------------------------------------------------
+# PRIME binary wheel CI/CD — Step 4 revised
+#
+# Builds platform wheels for Linux, macOS, and Windows using cibuildwheel.
+# Triggered on version tags (v*.*.*) and manually.
+#
+# Publishing model:
+#   workflow_dispatch(upload_target=testpypi)
+#     → build → test → publish TestPyPI → fresh-install smoke test
+#
+#   push tag v*.*.*
+#     → build → test → publish TestPyPI → fresh-install smoke test
+#     → (only if smoke test PASSES) publish production PyPI
+#
+# Trusted Publishing (OIDC) is the preferred mechanism for both registries.
+# No long-lived API token is required when PyPI environments are configured
+# for OIDC; fall back to secrets only if OIDC is unavailable.
+#
+# Required GitHub environments:
+#   testpypi   — maps to https://test.pypi.org/p/prime-ai
+#   pypi       — maps to https://pypi.org/p/prime-ai
+#
+# Third-party Actions are pinned to full commit SHAs to prevent supply-chain
+# substitution attacks. SHA comments record the semver for human reference.
+# ---------------------------------------------------------------------------
+
+name: Build and Publish Wheels
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      upload_target:
+        description: "Upload to: none | testpypi | pypi"
+        required: false
+        default: "none"
+
+# Minimal default permissions — individual jobs override where needed.
+permissions:
+  contents: read
+
+jobs:
+  # ─── 1. BUILD WHEELS ──────────────────────────────────────────────────────
+  build_wheels:
+    name: Build wheels — ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Linux x86_64 — GitHub-hosted runner, native build
+          - os: ubuntu-latest
+            cibw_archs: "x86_64"
+            artifact_name: wheels-linux-x86_64
+
+          # Linux aarch64 — emulated via QEMU on ubuntu-latest
+          # NOTE: QEMU emulation is significantly slower (~5-10x) than native.
+          # Platform status will be BUILT_EMULATED until a native arm64 runner
+          # is available. cibuildwheel cross-compilation requires QEMU setup.
+          - os: ubuntu-latest
+            cibw_archs: "aarch64"
+            artifact_name: wheels-linux-aarch64
+            needs_qemu: true
+
+          # macOS x86_64 — macos-13 provides Intel runners
+          - os: macos-13
+            cibw_archs: "x86_64"
+            artifact_name: wheels-macos-x86_64
+
+          # macOS arm64 — macos-14 provides Apple Silicon (M1) runners
+          - os: macos-14
+            cibw_archs: "arm64"
+            artifact_name: wheels-macos-arm64
+
+          # Windows x86_64
+          - os: windows-latest
+            cibw_archs: "AMD64"
+            artifact_name: wheels-windows-x86_64
+
+    steps:
+      - name: Checkout
+        # actions/checkout v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Set up QEMU (Linux aarch64 only)
+        if: matrix.needs_qemu == true
+        # docker/setup-qemu-action v3.2.0
+        uses: docker/setup-qemu-action@49b3bc8e6bdd4a60e6116a5414239cba5943d3cf
+
+      - name: Set up Python
+        # actions/setup-python v5.3.0
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
+        with:
+          python-version: "3.12"
+
+      - name: Install cibuildwheel
+        run: pip install cibuildwheel==2.20.0
+
+      - name: Build wheels
+        run: python -m cibuildwheel --output-dir wheelhouse
+        env:
+          CIBW_ARCHS: ${{ matrix.cibw_archs }}
+          # Target CPython 3.10, 3.11, 3.12 — 3.10 is the declared minimum
+          CIBW_BUILD: "cp310-* cp311-* cp312-*"
+          # Skip 32-bit builds — PRIME requires 64-bit for C++ alignment
+          CIBW_SKIP: "*-win32 *-manylinux_i686 *-musllinux_*"
+          # Use the build module as the build frontend
+          CIBW_BUILD_FRONTEND: "build"
+          # Run the installed-package regression test after each wheel build
+          CIBW_TEST_COMMAND: "python {project}/scripts/test_installed_package.py"
+          # Linux: manylinux2014 provides broad glibc 2.17+ compatibility
+          CIBW_MANYLINUX_X86_64_IMAGE: manylinux2014
+          CIBW_MANYLINUX_AARCH64_IMAGE: manylinux2014
+          # macOS: minimum deployment target for arm64 / universal2 support
+          CIBW_ENVIRONMENT_MACOS: >
+            MACOSX_DEPLOYMENT_TARGET=11.0
+          # Windows: MSVC 2022 required for C++17
+          CIBW_ENVIRONMENT_WINDOWS: >
+            CMAKE_GENERATOR="Visual Studio 17 2022"
+
+      - name: Upload wheel artifacts
+        # actions/upload-artifact v4.4.3
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: wheelhouse/*.whl
+          if-no-files-found: error
+
+  # ─── 2. BUILD SDIST ───────────────────────────────────────────────────────
+  build_sdist:
+    name: Build source distribution
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Set up Python
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
+        with:
+          python-version: "3.12"
+
+      - name: Install build tools
+        # Use 'build' (PEP 517) instead of the deprecated 'python setup.py sdist'
+        run: pip install build>=1.0
+
+      - name: Build sdist
+        run: python -m build --sdist --outdir dist/
+
+      - name: Verify sdist contents
+        run: |
+          python3 - << 'EOF'
+          import tarfile, glob, sys
+
+          sdist = glob.glob('dist/*.tar.gz')
+          if not sdist:
+              print("ERROR: no sdist found", file=sys.stderr)
+              sys.exit(1)
+
+          sdist = sdist[0]
+          with tarfile.open(sdist) as t:
+              names = t.getnames()
+
+          hpp = [n for n in names if n.endswith('.hpp')]
+          cpp = [n for n in names if n.endswith('.cpp') and '/cpp/' in n]
+          py  = [n for n in names if n.endswith('.py') and '/prime/' in n]
+
+          required = ['README.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'pyproject.toml']
+          missing  = [r for r in required if not any(r in n for n in names)]
+
+          bad = [n for n in names if any(x in n for x in [
+              '.git', '__pycache__', '.pyc', '.pyo',
+              '.env', 'venv', '.egg-info/SOURCES',
+          ])]
+
+          print(f"sdist: {sdist}")
+          print(f"  C++ headers : {len(hpp)}")
+          print(f"  C++ sources : {len(cpp)}")
+          print(f"  Python mods : {len(py)}")
+          print(f"  Missing req : {missing or 'none'}")
+          print(f"  Bad files   : {bad or 'none'}")
+
+          assert len(hpp) >= 30, f"Expected >=30 .hpp files, got {len(hpp)}"
+          assert len(cpp) >= 5,  f"Expected >=5 .cpp files, got {len(cpp)}"
+          assert not missing,    f"Missing required files: {missing}"
+          assert not bad,        f"Unwanted files in sdist: {bad}"
+          print("sdist OK")
+          EOF
+
+      - name: Upload sdist artifact
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
+        with:
+          name: sdist
+          path: dist/*.tar.gz
+          if-no-files-found: error
+
+  # ─── 3. PUBLISH TO TESTPYPI ───────────────────────────────────────────────
+  publish_testpypi:
+    name: Publish to TestPyPI
+    needs: [build_wheels, build_sdist]
+    runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'workflow_dispatch' &&
+       github.event.inputs.upload_target == 'testpypi') ||
+      (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v'))
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/prime-ai
+    permissions:
+      id-token: write   # OIDC trusted publishing
+
+    steps:
+      - name: Download all wheel artifacts
+        # actions/download-artifact v4.1.8
+        uses: actions/download-artifact@fa0a91b85d4f404e444306234f7c04c3e3efb194
+        with:
+          pattern: "wheels-*"
+          path: dist
+          merge-multiple: true
+
+      - name: Download sdist artifact
+        uses: actions/download-artifact@fa0a91b85d4f404e444306234f7c04c3e3efb194
+        with:
+          name: sdist
+          path: dist
+
+      - name: List artifacts to publish
+        run: ls -lh dist/
+
+      - name: Publish to TestPyPI
+        # pypa/gh-action-pypi-publish v1.10.3
+        uses: pypa/gh-action-pypi-publish@15c56dba361d8335944d31a2ecd17d700fc7eb8e
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          # OIDC trusted publishing is the default when id-token: write is set.
+          # To fall back to API token, uncomment:
+          # password: ${{ secrets.TESTPYPI_API_TOKEN }}
+          skip-existing: true   # tolerate re-runs if version already exists
+
+  # ─── 4. TESTPYPI FRESH-INSTALL SMOKE TEST ─────────────────────────────────
+  testpypi_smoke:
+    name: TestPyPI fresh-install smoke test
+    needs: publish_testpypi
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout (for test script only)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Set up Python
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
+        with:
+          python-version: "3.12"
+
+      - name: Install from TestPyPI into a clean venv
+        run: |
+          python -m venv /tmp/prime_testpypi_venv
+          /tmp/prime_testpypi_venv/bin/pip install \
+            --index-url https://test.pypi.org/simple/ \
+            --extra-index-url https://pypi.org/simple/ \
+            prime-ai
+
+      - name: Verify site-packages install (not source tree)
+        run: |
+          /tmp/prime_testpypi_venv/bin/python -c "
+          import prime, sys
+          print('prime.__file__:', prime.__file__)
+          assert 'site-packages' in prime.__file__, \
+              f'FAIL: not in site-packages: {prime.__file__}'
+          print('OK: installed in site-packages')
+          "
+
+      - name: Run installed-package smoke test (16/16 expected)
+        run: |
+          cd /tmp
+          /tmp/prime_testpypi_venv/bin/python $GITHUB_WORKSPACE/scripts/test_installed_package.py
+
+  # ─── 5. PUBLISH TO PRODUCTION PYPI ───────────────────────────────────────
+  # GATE: requires testpypi_smoke to PASS first.
+  # Triggered only by tag pushes, never by workflow_dispatch alone.
+  publish_pypi:
+    name: Publish to PyPI (production)
+    needs: [build_wheels, build_sdist, testpypi_smoke]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    environment:
+      name: pypi
+      url: https://pypi.org/p/prime-ai
+    permissions:
+      id-token: write   # OIDC trusted publishing
+
+    steps:
+      - name: Download all wheel artifacts
+        uses: actions/download-artifact@fa0a91b85d4f404e444306234f7c04c3e3efb194
+        with:
+          pattern: "wheels-*"
+          path: dist
+          merge-multiple: true
+
+      - name: Download sdist artifact
+        uses: actions/download-artifact@fa0a91b85d4f404e444306234f7c04c3e3efb194
+        with:
+          name: sdist
+          path: dist
+
+      - name: List artifacts to publish
+        run: ls -lh dist/
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@15c56dba361d8335944d31a2ecd17d700fc7eb8e
+        # OIDC trusted publishing is the default.
+        # To fall back to API token, uncomment:
+        # with:
+        #   password: ${{ secrets.PYPI_API_TOKEN }}
