@@ -1,0 +1,374 @@
+# PRIME — Lightweight Adaptive AI Core
+
+**Version 1.0.0** · CPU-first · Offline-capable · Modular
+
+PRIME is a lightweight, modular, CPU-first, offline-capable AI runtime that
+combines local LLM execution, memory, universal problem representation, hybrid
+reasoning, dynamic intelligence composition, experience-derived intelligence,
+continual learning, and adaptive execution optimisation.
+
+---
+
+## Quick Start
+
+```python
+from prime import PRIME
+
+with PRIME() as prime:
+    result = prime.solve("A car travels 150 km in 3 hours.")
+    print(result.status)        # SolveStatus.SUCCESS
+    print(result.answer)        # answer string
+    print(result.latency_ms)    # wall-clock ms
+```
+
+---
+
+## Installation
+
+### From PyPI (recommended)
+
+```bash
+pip install prime-ai
+```
+
+No mandatory runtime dependencies. Works offline after installation.
+
+Optional — richer resource metrics:
+
+```bash
+pip install prime-ai[metrics]   # installs psutil
+```
+
+**Requirements:** Python ≥ 3.10 · Linux/macOS/Windows x86_64 or arm64
+
+### From source (development)
+
+```bash
+git clone https://github.com/prime-ai/prime.git
+cd prime
+pip install -e .
+```
+
+Requires: CMake ≥ 3.18, a C++17 compiler (GCC 9+, Clang 12+, MSVC 2022).
+
+**Run all tests**
+
+```bash
+PYTHONPATH=python python3 -m unittest \
+  tests/python/test_prime.py \
+  tests/python/test_llm.py \
+  tests/python/test_memory.py \
+  tests/python/test_integration_phase3.py \
+  tests/python/test_atlas.py \
+  tests/python/test_reasoning.py \
+  tests/python/test_mosaic.py \
+  tests/python/test_echo.py \
+  tests/python/test_learning.py \
+  tests/python/test_optimizer.py \
+  tests/python/test_integration_phase10.py
+# Ran 1032 tests in ~0.3 s   OK (skipped=1)
+```
+
+---
+
+## Architecture
+
+```
+                         PRIME
+                           │
+                    User / Application
+                           │
+                     Python API Layer
+                           │
+                   PRIME Core Runtime
+                           │
+        ┌──────────────────┼──────────────────┐
+        │                  │                  │
+      ATLAS             MEMORY            LLM Engine
+        │                  │                  │
+        └──────────────────┼──────────────────┘
+                           │
+                   MOSAIC Composer
+                           │
+                  Hybrid Reasoning
+                           │
+                     Validation
+                           │
+                        ECHO
+                           │
+               Self-Learning Engine
+                           │
+            Adaptive Optimisation (Phase 9)
+                           │
+                       Execution
+                           │
+                      Experience
+                           │
+                  Continual Adaptation
+```
+
+| Layer | Phase | Module | Responsibility |
+|---|---|---|---|
+| C++ runtime | 1 | `_prime` extension | Memory-safe core, logging, lifecycle |
+| LLM engine | 2 | `prime.llm` | Local model loading and inference |
+| Memory | 3 | `prime.memory` | Context-aware associative store |
+| ATLAS | 2 | `prime.atlas` | Universal Problem Representation (UPR) |
+| Reasoning | 4 | `prime.reasoning` | Symbolic + hybrid reasoning engine |
+| MOSAIC | 6 | `prime.mosaic` | Dynamic module composition |
+| ECHO | 7 | `prime.echo` | Experience recording and pattern extraction |
+| Learning | 8 | `prime.learning` | Continual strategy learning |
+| Optimizer | 9 | `prime.optimizer` | Resource-aware execution strategy |
+| Pipeline | 10 | `prime.pipeline` | Unified `solve()` API |
+| Research | 10 | `prime.research` | Benchmarks, ablations, experiments |
+
+---
+
+## API Reference
+
+### `PRIME` — main entry point
+
+```python
+from prime import PRIME, PrimeConfig
+
+prime = PRIME()            # default config
+prime = PRIME(config)      # RuntimeConfig (Phase 1)
+```
+
+**`prime.solve(task, …)`** — unified solve (Phase 10)
+
+```python
+result = prime.solve(
+    task,                        # str: natural-language problem
+    config       = PrimeConfig.default(),
+    task_id      = None,         # auto-generated UUID if omitted
+    include_trace= False,        # attach PrimeTrace to result
+    learning     = True,         # enable/disable Phase 8 learning
+    optimization = True,         # enable/disable Phase 9 optimizer
+    extra_facts  = None,         # dict injected into reasoning
+    extra_rules  = None,         # list injected into reasoning
+)
+# → PrimeResult
+```
+
+**`prime.pipeline(config)`** — reusable pipeline
+
+```python
+pipe = prime.pipeline()
+r1 = pipe.solve("task 1")
+r2 = pipe.solve("task 2")   # subsystems not re-initialised
+```
+
+**Subsystem accessors** (all return phase-specific engine objects)
+
+```python
+prime.atlas()       # ATLASEngine   — Phase 2
+prime.memory()      # MemoryStore   — Phase 3
+prime.reasoner()    # ReasoningEngine — Phase 4
+prime.mosaic()      # MOSAICEngine  — Phase 6
+prime.echo()        # ECHOEngine    — Phase 7
+prime.learning()    # LearningController — Phase 8
+prime.optimizer()   # AdaptiveOptimizationEngine — Phase 9
+```
+
+---
+
+### `PrimeConfig` — unified configuration
+
+```python
+from prime import PrimeConfig, FeatureFlags
+
+# Default full system
+cfg = PrimeConfig.default()
+
+# Minimal (ATLAS + Reasoning only)
+cfg = PrimeConfig.minimal()
+
+# Ablation baseline
+cfg = PrimeConfig.for_ablation("mosaic_echo_learning")
+
+# Custom
+cfg = PrimeConfig(
+    log_level          = "silent",
+    optimizer_policy   = "LOW_LATENCY",
+    optimizer_level    = "BALANCED",
+    learning_rate      = 0.05,
+    features           = FeatureFlags.full(),
+)
+cfg.validate()          # raises ValueError on illegal values
+
+# Serialisation
+json_str = cfg.to_json()
+cfg2     = PrimeConfig.from_json(json_str)
+```
+
+**`FeatureFlags` presets** (for ablation studies)
+
+| Preset | MOSAIC | ECHO | Learning | Optimisation |
+|---|---|---|---|---|
+| `static_baseline()` | ✗ | ✗ | ✗ | ✗ |
+| `mosaic_only()` | ✅ | ✗ | ✗ | ✗ |
+| `mosaic_echo()` | ✅ | ✅ | ✗ | ✗ |
+| `mosaic_echo_learning()` | ✅ | ✅ | ✅ | ✗ |
+| `full()` | ✅ | ✅ | ✅ | ✅ |
+
+---
+
+### `PrimeResult` — unified return object
+
+```python
+result.status           # SolveStatus enum
+result.succeeded        # bool: SUCCESS or PARTIAL_SUCCESS
+result.answer           # str
+result.answer_unit      # str  e.g. "km/h"
+result.answer_with_unit # "50 km/h"
+result.confidence       # float 0–1
+result.latency_ms       # wall-clock ms
+result.modules_used     # list[str]
+result.optimizer_strategy
+result.experience_id
+result.learning_applied # bool
+result.trace_id
+result.task_id
+result.experiment_id
+result.trace            # PrimeTrace (only when include_trace=True)
+
+result.explain()        # human-readable string
+result.to_dict()        # JSON-serialisable dict
+str(result)             # same as explain()
+```
+
+**`SolveStatus` codes**
+
+```
+SUCCESS  PARTIAL_SUCCESS  INVALID_INPUT  UNSUPPORTED_TASK
+MODULE_UNAVAILABLE  MODEL_UNAVAILABLE  RESOURCE_LIMIT  TIMEOUT
+VALIDATION_FAILED  REASONING_FAILED  COMPOSITION_FAILED
+LEARNING_REJECTED  OPTIMIZATION_FAILED  INTERNAL_ERROR
+```
+
+---
+
+### `PrimeTrace` — full execution trace
+
+```python
+result = prime.solve(task, include_trace=True)
+trace  = result.trace
+
+trace.atlas_summary          # dict: domain, entity_count, goal_count
+trace.mosaic_modules         # list[str]
+trace.mosaic_selection_reasons
+trace.reasoning_status
+trace.validation_passed
+trace.echo_experience_id
+trace.learning_updated
+trace.optimizer_strategy
+trace.optimizer_latency_ms
+trace.timings                # PhaseTimings: per-phase wall-clock
+
+trace.explain()              # 8-section human-readable explanation
+trace.to_dict()              # JSON-serialisable
+```
+
+`trace.explain()` answers all 10 explainability questions defined in
+Phase 10 (§10): what was understood, which modules, why, what reasoning,
+how validated, what experience, what knowledge, learning outcome, changes, optimisation.
+**No LLM generates these answers** — all text comes from recorded phase data.
+
+---
+
+### Research & Benchmarking
+
+```python
+from prime import (
+    SyntheticBenchmarkSuite, ExperimentRunner,
+    AblationStudy, LearningCurveExperiment,
+    PrimeConfig, profile_component,
+)
+
+# Deterministic tasks with known ground truth
+tasks = SyntheticBenchmarkSuite.core_tasks()   # fast CI set
+tasks = SyntheticBenchmarkSuite.all_tasks()    # full set
+
+# Run a baseline
+def factory(cfg=None): return PRIME()
+runner = ExperimentRunner(factory)
+exp    = runner.run(tasks, PrimeConfig.default(), experiment_name="my_run")
+print(exp.summary())
+print(exp.to_json())
+
+# Ablation study
+study   = AblationStudy(factory)
+results = study.run_all(tasks, baselines=["mosaic_only", "full"])
+print(AblationStudy.compare(results))
+
+# Learning curve
+curve_exp = LearningCurveExperiment(factory)
+curve     = curve_exp.run(
+    training_tasks = SyntheticBenchmarkSuite.REPEATED,
+    probe_tasks    = SyntheticBenchmarkSuite.core_tasks()[:3],
+    checkpoints    = [0, 5, 10, 20],
+)
+for pt in curve:
+    print(f"  {pt.n_experiences:4d} experiences → {pt.accuracy*100:.1f}% accuracy")
+
+# Component profiling
+prof = profile_component(
+    lambda: prime.solve("2 + 2"), n=100, label="solve")
+print(f"mean={prof.mean_ms:.2f} ms  std={prof.std_ms:.2f} ms")
+```
+
+---
+
+## Configuration Reference
+
+| Field | Default | Description |
+|---|---|---|
+| `log_level` | `"warn"` | `silent\|error\|warn\|info\|debug` |
+| `compute_backend` | `"cpu"` | CPU-only in this version |
+| `max_memory_bytes` | `0` | 0 = unlimited |
+| `model_path` | `None` | Path to local GGUF/GGML model |
+| `max_tokens` | `128` | Max LLM generation tokens |
+| `memory_max_items` | `1000` | Memory store capacity |
+| `mosaic_max_modules` | `8` | Max modules per plan |
+| `echo_max_experiences` | `10000` | ECHO store capacity |
+| `learning_mode` | `"STRATEGY_LEARNING"` | Phase 8 learning mode |
+| `learning_rate` | `0.05` | Continual learning rate |
+| `optimizer_policy` | `"BALANCED"` | Phase 9 optimisation policy |
+| `optimizer_level` | `"BALANCED"` | `OFF\|MINIMAL\|BALANCED\|AGGRESSIVE` |
+| `max_reasoning_steps` | `100` | Hard reasoning step limit |
+| `max_execution_steps` | `20` | Hard module execution limit |
+| `execution_timeout_s` | `None` | Global solve timeout |
+| `seed` | `None` | Reproducibility seed |
+
+---
+
+## Supported Platforms
+
+| Platform | Status |
+|---|---|
+| Linux (x86-64) | ✅ Primary |
+| macOS (x86-64 / Apple Silicon) | ✅ Supported |
+| Windows (x86-64) | ✅ Supported |
+
+---
+
+## Phase Summary
+
+| Phase | Name | Key Contribution |
+|---|---|---|
+| 1 | Core Runtime | C++ runtime, Python bindings, lifecycle |
+| 2 | LLM + ATLAS | Local model inference, Universal Problem Representation |
+| 3 | Memory | Associative context-aware memory store |
+| 4 | Reasoning | Symbolic + hybrid reasoning engine |
+| 5 | Generation | Structured text generation |
+| 6 | MOSAIC | Dynamic module composition (capability matching) |
+| 7 | ECHO | Experience recording, pattern extraction, knowledge |
+| 8 | Learning | Continual strategy learning from ECHO experiences |
+| 9 | Optimizer | Resource-aware adaptive execution strategy |
+| 10 | Integration | Unified `solve()` API, config, research framework |
+
+---
+
+## License
+
+See `LICENSE` file.

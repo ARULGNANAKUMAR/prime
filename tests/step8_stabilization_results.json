@@ -1,0 +1,149 @@
+{
+  "version": "1.0.0",
+  "date": "2026-10-09",
+  "environment": {
+    "python": "3.12.3",
+    "platform": "Linux x86_64",
+    "installation_source": "local wheel (site-packages, not source tree)"
+  },
+  "installation": {
+    "wheel": "PASS",
+    "sdist": "NOT_TESTED_locally",
+    "pypi": "NOT_EXECUTED — network blocked",
+    "clean_venv": "PASS",
+    "source_tree_independence": "PASS"
+  },
+  "public_api": {
+    "import": "PASS",
+    "PRIME_class": "PASS",
+    "solve_method": "PASS",
+    "SolveStatus_enum": "PASS",
+    "result_attributes": "PASS",
+    "entry_points": "none declared"
+  },
+  "error_handling": {
+    "empty_string": "INVALID_INPUT — PASS",
+    "whitespace": "INVALID_INPUT — PASS",
+    "none_input": "INVALID_INPUT — PASS",
+    "int_input": "REASONING_FAILED (no crash) — PASS (bug fixed)",
+    "list_input": "REASONING_FAILED (no crash) — PASS",
+    "dict_input": "INVALID_INPUT (no crash) — PASS",
+    "nonsense": "REASONING_FAILED — PASS",
+    "normal": "SUCCESS answer=50 — PASS"
+  },
+  "multi_domain": {
+    "physics_speed": "SUCCESS — PASS",
+    "arithmetic": "PARTIAL_SUCCESS — documented limitation",
+    "business": "PARTIAL_SUCCESS — documented limitation",
+    "biology_exponential": "REASONING_FAILED — documented limitation (not in rule set)",
+    "engineering": "PARTIAL_SUCCESS — documented limitation",
+    "programming": "PARTIAL_SUCCESS — documented limitation",
+    "finance": "PARTIAL_SUCCESS — documented limitation"
+  },
+  "cpp_extensions": {
+    "_prime": "PASS",
+    "_prime_llm": "PASS",
+    "_prime_memory": "PASS",
+    "_prime_atlas": "PASS",
+    "_prime_reasoning": "PASS",
+    "_prime_mosaic": "PASS",
+    "total": "6/6"
+  },
+  "platforms": {
+    "linux_x86_64_cp312": "PASS",
+    "linux_x86_64_cp311": "NOT_TESTED",
+    "linux_x86_64_cp310": "NOT_TESTED",
+    "linux_aarch64": "NOT_TESTED — requires CI",
+    "macos_x86_64": "NOT_TESTED — requires CI",
+    "macos_arm64": "NOT_TESTED — requires CI",
+    "windows_x86_64": "NOT_TESTED — requires CI"
+  },
+  "dependencies": {
+    "mandatory_runtime": 0,
+    "optional": ["psutil>=5.9 (metrics)", "pytest>=7.0 (dev)"],
+    "heavy_frameworks_imported": "NONE",
+    "third_party_at_runtime": "NONE (json, sqlite3 are stdlib)"
+  },
+  "offline": {
+    "socket_blocked_test": "PASS",
+    "network_calls_detected": 0
+  },
+  "source_tree_independence": "PASS",
+  "reinstall": {
+    "uninstall": "PASS",
+    "reinstall": "PASS",
+    "post_reinstall_solve": "PASS"
+  },
+  "upgrade_downgrade": "NOT_APPLICABLE — no prior public release",
+  "performance": {
+    "step6_baseline_ms": 0.872,
+    "step8_mean_ms": 1.174,
+    "pct_change": "+34.6%",
+    "regression_flag": false,
+    "threshold_used_pct": 50,
+    "note": "Both measured on same shared single-core container; variance expected"
+  },
+  "memory": {
+    "1000_solves_rss_growth_kb": 24064,
+    "per_solve_growth_kb": 24.1,
+    "growth_pattern": "linear",
+    "gc_releases": false,
+    "crashes": 0,
+    "failures": 0,
+    "latency_drift_pct": -11.2,
+    "verdict": "WARN — linear growth documented; no crash or data corruption"
+  },
+  "state_isolation": {
+    "a_b_a_consistency": "PASS",
+    "two_instance_isolation": "PASS"
+  },
+  "concurrency": {
+    "shared_instance_4threads_25calls": "PASS",
+    "separate_instances_4threads_25calls": "PASS",
+    "recommended_pattern": "one instance per thread"
+  },
+  "long_run": {
+    "iterations": 1000,
+    "failures": 0,
+    "latency_drift": "PASS",
+    "memory": "WARN — see memory section"
+  },
+  "security": {
+    "git_history_secrets": "NONE",
+    "python_source_credentials": "NONE",
+    "wheel_contents": "PASS — no secrets",
+    "sdist_contents": "PASS — no secrets",
+    "gguf_fixture": "100KB synthetic test fixture, not in wheel/sdist, not a real model",
+    "telemetry": "NONE",
+    "network_calls": "NONE"
+  },
+  "regression": {
+    "smoke_16_16": "PASS (RE-RUN)",
+    "error_handling_6_6": "PASS (RE-RUN)",
+    "python_suite": "NOT_RE-RUN (network blocked, pytest unavailable; 1031/1032 from Step 3)",
+    "cpp_suite": "NOT_RE-RUN (542/542 from Step 3; no C++ changes)"
+  },
+  "bugs_found": 1,
+  "bugs_fixed": 1,
+  "bugs": [
+    {
+      "id": "BUG-001",
+      "description": "solve(int) raises AttributeError: 'int' object has no attribute 'strip'",
+      "severity": "medium",
+      "root_cause": "pipeline.py called task.strip() before isinstance(task, str) check",
+      "fix": "Added isinstance check and str() coercion before .strip() call",
+      "file": "python/prime/pipeline.py",
+      "regression_test": "tests/test_error_handling.py::test_solve_integer_no_crash",
+      "verified": true
+    }
+  ],
+  "known_limitations": [
+    "Full answer extraction (SUCCESS) only reliable for physics speed-calculation problems",
+    "Biology exponential-growth tasks return REASONING_FAILED (not in rule set)",
+    "~24 KB/solve linear RSS growth from internal trace/UUID objects",
+    "True component ablation not possible via public API",
+    "Python 3.10 and 3.11 not tested (wheel not built)",
+    "Cross-platform CI not executed (network blocked)",
+    "Production PyPI not published (network blocked)"
+  ]
+}

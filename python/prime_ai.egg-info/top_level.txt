@@ -1,0 +1,7 @@
+_prime
+_prime_atlas
+_prime_llm
+_prime_memory
+_prime_mosaic
+_prime_reasoning
+prime

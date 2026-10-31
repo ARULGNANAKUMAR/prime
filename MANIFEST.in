@@ -1,0 +1,28 @@
+# MANIFEST.in — controls what ends up in the source distribution (sdist).
+# C++ source files and headers must be included so the package can be
+# compiled from the sdist on any supported platform.
+
+# C++ source and header files
+recursive-include cpp *.cpp *.hpp *.h
+
+# Python package
+recursive-include python *.py *.pyi
+
+# Documentation and metadata
+include README.md
+include LICENSE
+include THIRD_PARTY_NOTICES.md
+include pyproject.toml
+
+# Exclude build artifacts and IDE files
+global-exclude __pycache__
+global-exclude *.py[co]
+global-exclude *.so
+global-exclude *.pyd
+global-exclude .DS_Store
+prune build
+prune dist
+prune *.egg-info
+prune tests
+prune examples
+prune docs

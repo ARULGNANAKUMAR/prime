@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "prime-ai"
+version = "1.0.0"
+description = "PRIME: Lightweight Adaptive AI Core — modular, CPU-first, offline-capable AI runtime"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+    {name = "ARUL GNANAKUMAR R", email = "arulgnanakumar@gmail.com"},
+]
+keywords = ["ai", "llm", "reasoning", "local-ai", "modular", "cpu-inference"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: C++",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = []
+
+[project.optional-dependencies]
+metrics = ["psutil>=5.9"]
+dev     = ["pytest>=7.0"]
+
+[project.urls]
+Homepage        = "https://github.com/prime-ai/prime"
+Documentation   = "https://github.com/prime-ai/prime/blob/main/docs/API.md"
+"Bug Tracker"   = "https://github.com/prime-ai/prime/issues"
+Changelog       = "https://github.com/prime-ai/prime/releases"
+
+[tool.setuptools]
+package-dir = {"" = "python"}
+
+[tool.setuptools.packages.find]
+where = ["python"]
+
+[tool.setuptools.package-data]
+prime = ["*.pyi"]

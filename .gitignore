@@ -1,0 +1,72 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+dist/
+build/
+*.dist-info/
+
+# C++ build
+*.o
+*.a
+*.lib
+*.dll
+*.dylib
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+CTestTestfile.cmake
+_CPack_Packages/
+*.cmake
+!CMakeLists.txt
+!cmake/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env/
+
+# IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Benchmark temporary outputs (keep JSON results, exclude logs/caches)
+benchmarks/results/*.log
+benchmarks/.cache/
+
+# Local secrets / credentials
+.env
+*.pem
+*.key
+*.token
+secrets/
+
+# Compiled extensions in source tree (belong in dist/, not here)
+python/prime/_prime*.so
+python/prime/_prime*.pyd
+
+# Build working directories
+_skbuild/
+_cmake_test_compile/
